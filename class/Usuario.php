@@ -103,7 +103,7 @@
             $banco = new Sql();
             $results = $banco->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)",array(
                 ":LOGIN"=>$this->getDeslogin(),
-                ":PASSWORD"=>$this->getDessenha(),
+                ":PASSWORD"=>$this->getDessenha()
             ));
 
             if(count($results)>0){
@@ -120,8 +120,21 @@
             $banco->execQuery("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID",array(
                 ":LOGIN"=>$this->getDeslogin(),
                 ":PASSWORD"=>$this->getDessenha(),
-                ":ID"=>$this->getIdusuario(),
+                ":ID"=>$this->getIdusuario()
             ));
+        }
+
+        public function delete(){
+            $banco = new Sql();
+            
+            $banco->execQuery("DELETE FROM tb_usuarios WHERE idusuario = :ID",array(
+                ":ID"=>$this->getIdusuario()
+            ));
+
+            $this->setDeslogin(0);
+            $this->setDeslogin("");
+            $this->setDessenha("");
+            $this->setDtcadastro("");
         }
 
         public function __toString(){
